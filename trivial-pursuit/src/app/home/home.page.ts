@@ -24,6 +24,7 @@ export class HomePage {
     
     if(!this.difficulte){
       this.error = 'Veuillez renseigner le niveau de difficulté choisi !';
+      return;
     }
 
     if(!this.pseudo || this.pseudo.length < 3){

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Trivial Pursuit
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -29,7 +29,7 @@
         <input type="checkbox" value="false"/> Sauvegarder mes informations
       </div>
       <button (click)="verifierInfos()">Rechercher</button>
-      <div *ngIf="error">
+      <div class="error" *ngIf="error">
         <p>{{error}}</p>
       </div>
     </div>
