@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 @Component({
     selector:'app-rechercher',
     templateUrl: './rechercher.component.html',
@@ -11,8 +12,7 @@ export class RechercherComponent implements OnInit{
     public type : string = '';
     public error : string = '';//cf fonction rechercher
     public films = [];
-
-    constructor(){
+    constructor(private alertCtrl : AlertController){
 
     }
 
@@ -23,10 +23,16 @@ export class RechercherComponent implements OnInit{
     }
 
     //Vérification -- sur les champs
-    public rechercher(){
+    public async rechercher(){
         this.error='';
         if(!this.title || this.title.length <= 3){
             this.error = "Veuillez saisir un titre de 3 caractères minimum";
+            const alert = await this.alertCtrl.create({
+                header : 'Informations manquantes',
+                message : "Veuillez saisir un titre de 3 caractères minimum",
+                buttons : ['OK']
+            });
+            alert.present();
             return;
         }
         if(!this.year || (this.year < 1900 || this.year > 2050)){
