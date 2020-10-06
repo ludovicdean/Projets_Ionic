@@ -14,7 +14,34 @@
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div id="loginForm" [hidden]="isVisible">
+      <h2>Votre pseudo</h2>
+      <input type="text" [(ngModel)]="pseudo" />
+
+      <h2>Difficulté</h2>
+      <select>
+        <option value=""></option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+      </select>
+      <div id="sauvegarderInfos">
+        <input type="checkbox" value="false"/> Sauvegarder mes informations
+      </div>
+      <button (click)="verifierInfos()">Rechercher</button>
+      <div *ngIf="error">
+        <p>{{error}}</p>
+      </div>
+    </div>
+  </div>
+  <div id="question" [hidden]=isVisibleQuestion>
+    <h3>{{pseudo}}, que nous offrira A.C. si nous arrivons à 100% de réussite ?</h3>
+    <button (click)="reponse()">Réponse A</button>
+    <button (click)="reponse()">Réponse B</button>
+    <button (click)="reponse()">Réponse C</button>
+    <button (click)="reponse()">Réponse D</button>
+  </div>
+  <div id="nextQuestion" [hidden]=isVisibleNextQuestion>
+    <button>Question suivante</button>
   </div>
 </ion-content>
