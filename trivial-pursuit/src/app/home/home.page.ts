@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Question } from '../models/question';
+import { OpenTriviaProvider } from '../providers/openTrivia.provider';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,12 @@ export class HomePage {
   isVisible : boolean = false;
   isVisibleQuestion : boolean = true;
   isVisibleNextQuestion : boolean = true;
+  numberQ : number;
+  questions : Array<Question>;
+  index : number = 0;
+  questionCourante : Question;
 
-  constructor(private alertCtrl : AlertController) {}
+  constructor(private alertCtrl : AlertController, private openTriviaProvider : OpenTriviaProvider) {}
 
   public async verifierInfos(){
 
@@ -40,19 +46,14 @@ export class HomePage {
       return;
     }
 
-    // if(!this.difficulte && !this.pseudo){
-    //   // this.error = 'Veuillez renseigner votre pseudo et la difficulté choisis';
-    //   const alert = await this.alertCtrl.create({
-    //     header : 'Informations manquantes',
-    //     message : "Veuillez renseigner votre pseudo et la difficulté choisis",
-    //     buttons : ['OK']
-    //   });
-    //   alert.present();
-    //   return; 
-    // }
+    await this.chargerQuestions();
+
+    this.shuffle(this.questions);
 
     this.isVisible = true;
     this.isVisibleQuestion = false;
+
+    this.afficherQuestion();
     
   }
 
@@ -60,4 +61,35 @@ export class HomePage {
     this.isVisibleNextQuestion = false;
   }
 
+  public async chargerQuestions(){
+    this.openTriviaProvider.getQuestions(this.numberQ, this.difficulte)
+    .then((questions)=>{this.questions=questions})
+    .catch(async (error)=>{const alert = await this.alertCtrl.create({
+      header : 'Erreur chargement', 
+      message : "Problème de chargement des questions.", 
+      buttons : ['OK']
+    });
+    alert.present();
+    });
+}
+
+public afficherQuestion(){
+  this.questionCourante = this.questions[this.index];
+  
+  this.index++;
+}
+
+public shuffle(questions){
+  var indexCourant = questions.length;
+  var valeurTemporaire;
+  var indexAleatoire;
+
+  while (0 !== indexCourant) {
+    indexAleatoire = Math.floor(Math.random() * indexCourant);
+    indexCourant = indexCourant - 1;
+    valeurTemporaire = questions[indexCourant];
+    questions[indexCourant] = questions[indexAleatoire];
+    questions[indexAleatoire] = valeurTemporaire;
+  }
+}
 }

@@ -41,7 +41,7 @@
 </ion-content>
 
 <ion-content id="question" [hidden]=isVisibleQuestion>
-  <h3>{{pseudo}}, que nous offrira A.C. si nous arrivons à 100% de réussite ?</h3>
+  <h3>{{pseudo}}, {{questionCourante.question}}</h3>
   <ion-button (click)="reponse()">Réponse A</ion-button>
   <ion-button (click)="reponse()">Réponse B</ion-button>
   <ion-button (click)="reponse()">Réponse C</ion-button>
@@ -51,4 +51,3 @@
     <ion-button>Question suivante</ion-button>
   </div>
 </ion-content> 
-

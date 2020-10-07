@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FilmsProvider } from './providers/film.providers';
+import { FilmsProvider } from './providers/film.provider';
 
 @NgModule({
   declarations: [AppComponent],
