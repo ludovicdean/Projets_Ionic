@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -13,24 +14,43 @@ export class HomePage {
   isVisibleQuestion : boolean = true;
   isVisibleNextQuestion : boolean = true;
 
-  constructor() {}
+  constructor(private alertCtrl : AlertController) {}
 
-  public verifierInfos(){
-    
-    if(!this.difficulte && !this.pseudo){
-      this.error = 'Veuillez renseigner votre pseudo et la difficulté choisis';
-      return; 
+  public async verifierInfos(){
+
+    if(!this.pseudo || this.pseudo.length < 3){
+      // this.error = 'Veuillez renseigner un pseudo de plus de 3 caractères';
+      const alert = await this.alertCtrl.create({
+        header : 'Informations incorrectes',
+        message : "Veuillez renseigner un pseudo de plus de 3 caractères !",
+        buttons : ['OK']
+      });
+      alert.present();
+      return;
     }
     
     if(!this.difficulte){
-      this.error = 'Veuillez renseigner le niveau de difficulté choisi !';
+      // this.error = 'Veuillez renseigner le niveau de difficulté choisi !';
+      const alert = await this.alertCtrl.create({
+        header : 'Informations incorrectes',
+        message : "Veuillez renseigner le niveau de difficulté choisi !",
+        buttons : ['OK']
+      });
+      alert.present();
       return;
     }
 
-    if(!this.pseudo || this.pseudo.length < 3){
-      this.error = 'Veuillez renseigner un pseudo de plus de 3 caractères';
-      return;
-    }
+    // if(!this.difficulte && !this.pseudo){
+    //   // this.error = 'Veuillez renseigner votre pseudo et la difficulté choisis';
+    //   const alert = await this.alertCtrl.create({
+    //     header : 'Informations manquantes',
+    //     message : "Veuillez renseigner votre pseudo et la difficulté choisis",
+    //     buttons : ['OK']
+    //   });
+    //   alert.present();
+    //   return; 
+    // }
+
     this.isVisible = true;
     this.isVisibleQuestion = false;
     

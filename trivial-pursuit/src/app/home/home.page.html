@@ -13,35 +13,42 @@
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <div id="loginForm" [hidden]="isVisible">
-      <h2>Votre pseudo</h2>
-      <input type="text" [(ngModel)]="pseudo" />
+  <ion-list id="container" [hidden]="isVisible">
 
-      <h2>Difficulté</h2>
-      <select>
-        <option value=""></option>
-        <option value="Easy">Easy</option>
-        <option value="Medium">Medium</option>
-        <option value="Hard">Hard</option>
-      </select>
-      <div id="sauvegarderInfos">
-        <input type="checkbox" value="false"/> Sauvegarder mes informations
-      </div>
-      <button (click)="verifierInfos()">Rechercher</button>
-      <div class="error" *ngIf="error">
-        <p>{{error}}</p>
-      </div>
-    </div>
-  </div>
-  <div id="question" [hidden]=isVisibleQuestion>
-    <h3>{{pseudo}}, que nous offrira A.C. si nous arrivons à 100% de réussite ?</h3>
-    <button (click)="reponse()">Réponse A</button>
-    <button (click)="reponse()">Réponse B</button>
-    <button (click)="reponse()">Réponse C</button>
-    <button (click)="reponse()">Réponse D</button>
-  </div>
-  <div id="nextQuestion" [hidden]=isVisibleNextQuestion>
-    <button>Question suivante</button>
-  </div>
+    <ion-item>
+      <ion-label position="floating">Votre pseudo</ion-label>
+      <ion-input type="text" [(ngModel)]="pseudo"></ion-input>
+    </ion-item> 
+
+    <ion-item>
+      <ion-label position="floating">Difficulté</ion-label>
+      <ion-select [(ngModel)] = "difficulte">
+        <ion-select-option value="Easy">Easy</ion-select-option>
+        <ion-select-option value="Medium">Medium</ion-select-option>
+        <ion-select-option value="Hard">Hard</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sauvegarder mes informations</ion-label>
+      <ion-toggle disabled="false"></ion-toggle>
+    </ion-item>
+
+    <ion-button expand="full" (click)="verifierInfos()">Commencer</ion-button>
+      
+  </ion-list>
+  
 </ion-content>
+
+<ion-content id="question" [hidden]=isVisibleQuestion>
+  <h3>{{pseudo}}, que nous offrira A.C. si nous arrivons à 100% de réussite ?</h3>
+  <ion-button (click)="reponse()">Réponse A</ion-button>
+  <ion-button (click)="reponse()">Réponse B</ion-button>
+  <ion-button (click)="reponse()">Réponse C</ion-button>
+  <ion-button (click)="reponse()">Réponse D</ion-button>
+
+  <div id="nextQuestion" [hidden]=isVisibleNextQuestion>
+    <ion-button>Question suivante</ion-button>
+  </div>
+</ion-content> 
+
