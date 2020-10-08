@@ -1,3 +1,4 @@
+import { ConditionalExpr } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FilmsProvider } from '../providers/film.provider';
@@ -8,7 +9,7 @@ import { FilmsProvider } from '../providers/film.provider';
 })
 export class RechercherComponent implements OnInit{
     public binding : string = 'Bonjour tout le monde !';
-    public title : string = '';
+    public title : string = 'Back to the Future';
     public year : number;
     public type : string = '';
     public error : string = '';//cf fonction rechercher
@@ -37,10 +38,10 @@ export class RechercherComponent implements OnInit{
             alert.present();
             return;
         }
-        if(!this.year || (this.year < 1900 || this.year > 2050)){
-            this.error = 'Veuillez saisir une année comprise entre 1900 et 2050';
-            return;
-        }
+        // if(!this.year || (this.year < 1900 || this.year > 2050)){
+        //     this.error = 'Veuillez saisir une année comprise entre 1900 et 2050';
+        //     return;
+        // }
         if(this.type === undefined){
             this.error='Veuillez choisir un type de média';
             return;
@@ -49,19 +50,34 @@ export class RechercherComponent implements OnInit{
 
     }
 
-    private lancerRecherche(){
-        this.rechercherFilm.search(this.title, this.year, this.type)
-        .then((resultat) => {
-            this.films = resultat;
-        })
-        .catch(async (err) => {
+    private async lancerRecherche(){
+        // this.rechercherFilm.search(this.title, this.year, this.type)
+        // .then((resultat) => {
+        //     this.films = resultat;
+        // })
+        // .catch(async (err) => {
+        //     const alert = await this.alertCtrl.create({
+        //         header : 'Erreur appel Service',
+        //         message : 'Impossible de récupérer les films',
+        //         buttons : ['OK']
+        //     });
+        //     alert.present();
+            
+        // });
+        try{
+            this.films = await this.rechercherFilm.search(this.title, this.year, this.type);
+            for(let current of this.films)
+            {
+                console.log(current);
+            }
+        } catch(err){
             const alert = await this.alertCtrl.create({
-                header : 'Erreur appel Service',
-                message : 'Impossible de récupérer les films',
-                buttons : ['OK']
+                header : err.message,
+                message: 'Aucun film trouvé'
             });
             alert.present();
-            
-        });
+        }
     }
+
+    
 }

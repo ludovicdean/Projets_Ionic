@@ -19,6 +19,10 @@ export class HomePage {
   questions : Array<Question>;
   index : number = 0;
   questionCourante : Question;
+  responses : string [];
+  answer1 : string;
+  answer2 : string;
+  answer3 : string;
 
   constructor(private alertCtrl : AlertController, private openTriviaProvider : OpenTriviaProvider) {}
 
@@ -75,8 +79,17 @@ export class HomePage {
 
 public afficherQuestion(){
   this.questionCourante = this.questions[this.index];
-  
+  this.responses = [];
+  this.answer1 = this.questionCourante.incorrect_answers[0];
+  this.answer2 = this.questionCourante.incorrect_answers[1];
+  this.answer3 = this.questionCourante.incorrect_answers[2];
+  this.responses.push(this.answer1);
+  this.responses.push(this.answer2);
+  this.responses.push(this.answer3);
+  this.responses.push(this.questionCourante.correct_answer);
+  this.shuffle(this.responses);
   this.index++;
+
 }
 
 public shuffle(questions){
